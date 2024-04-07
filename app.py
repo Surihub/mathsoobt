@@ -2,12 +2,7 @@ import streamlit as st
 import numpy as np
 import math
 
-# 사용자 정의 스타일을 적용하기 위한 CSS
-st.markdown("""
-<style>
-div.row-widget.stRadio > div {flex-direction:row;}
-</style>
-""", unsafe_allow_html=True)
+
 def simplify_fraction_good(numerator, denominator):
     # 분자와 분모의 최대공약수를 찾아서 약분합니다.
     gcd = math.gcd(numerator, denominator)
@@ -119,16 +114,18 @@ if st.button('정답 확인'):
         st.error('틀렸습니다.')
 
 
-import streamlit as st
-import streamlit.components.v1 as components
+with st.expander("힌트 : 그래프 보기"):
+    st.image('images/tri.png')
 
-with st.expander("힌트 보기"):
-    desmos_calculator = """
-    <div class="dcg-wrapper">
-        <iframe src="https://www.desmos.com/calculator/z7p7kwpe7f" width="600" height="350" style="border: 1px solid #ccc" frameborder=0></iframe>
-    </div>
-    """
-    components.html(desmos_calculator, height=400)
+# import streamlit.components.v1 as components
+
+# with st.expander("힌트 보기"):
+#     desmos_calculator = """
+#     <div class="dcg-wrapper">
+#         <iframe src="https://www.desmos.com/calculator/z7p7kwpe7f" width="600" height="350" style="border: 1px solid #ccc" frameborder=0></iframe>
+#     </div>
+#     """
+#     components.html(desmos_calculator, height=400)
 
 
 
