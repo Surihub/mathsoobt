@@ -65,41 +65,39 @@ def generate_problem():
 if 'problem' not in st.session_state or 'correct_answer' not in st.session_state:
     st.session_state.problem, st.session_state.correct_answer = generate_problem()
 
-st.title('📐삼각함수의 값 계산하기 연습')
+st.header('📐삼각함수의 값 계산하기 연습')
 
 # '새로운 문제 풀기' 버튼
 if st.button('새로운 문제 풀기', type="primary"):
     st.session_state.problem, st.session_state.correct_answer = generate_problem()
 
 # 문제 표시
-st.subheader("다음 삼각함수의 값을 구하시오.")
+st.write("다음 삼각함수의 값을 구하시오.")
 st.latex(st.session_state.problem)
 
 
-# 답안 변환 및 정답 확인 로직
+# 답안 변환 및 정답 확인 로직에 \displaystyle 추가
 answers_options_latex = {
-    '1': 1, r'\frac{\sqrt{3}}{2}': np.sqrt(3)/2, r'\frac{\sqrt{2}}{2}': np.sqrt(2)/2,
-    r'\frac{1}{2}': 1/2, r'\sqrt{3}': np.sqrt(3), r'\frac{\sqrt{3}}{3}': np.sqrt(3)/3, '0': 0,
-    '-1': -1, r'-\frac{\sqrt{3}}{2}': -np.sqrt(3)/2, r'-\frac{\sqrt{2}}{2}': -np.sqrt(2)/2,
-    r'-\frac{1}{2}': -1/2, r'-\sqrt{3}': -np.sqrt(3), r'-\frac{\sqrt{3}}{3}': -np.sqrt(3)/3
+    '1': 1, 
+    r'\displaystyle \frac{\sqrt{3}}{2}': np.sqrt(3)/2, 
+    r'\displaystyle \frac{\sqrt{2}}{2}': np.sqrt(2)/2,
+    r'\displaystyle \frac{1}{2}': 1/2, 
+    r'\displaystyle \sqrt{3}': np.sqrt(3), 
+    r'\displaystyle \frac{\sqrt{3}}{3}': np.sqrt(3)/3, 
+    '0': 0,
+    '-1': -1, 
+    r'\displaystyle -\frac{\sqrt{3}}{2}': -np.sqrt(3)/2, 
+    r'\displaystyle -\frac{\sqrt{2}}{2}': -np.sqrt(2)/2,
+    r'\displaystyle -\frac{1}{2}': -1/2, 
+    r'\displaystyle -\sqrt{3}': -np.sqrt(3), 
+    r'\displaystyle -\frac{\sqrt{3}}{3}': -np.sqrt(3)/3
 }
 
+# 라디오 버튼을 통해 답안 선택, 이미 \displaystyle을 적용했으므로 별도의 수정 필요 없음
+selected_answer = st.radio("답안을 선택하세요:", sorted(answers_options_latex.keys(), key=lambda x: answers_options_latex[x]), format_func=lambda x: f"${x}$")
 
-answers = ['1', r'\frac{\sqrt{3}}{2}', r'\frac{\sqrt{2}}{2}', r'\frac{1}{2}', r'\sqrt{3}', r'\frac{\sqrt{3}}{3}', '0',
-           '-1', r'-\frac{\sqrt{3}}{2}', r'-\frac{\sqrt{2}}{2}', r'-\frac{1}{2}', r'-\sqrt{3}', r'-\frac{\sqrt{3}}{3}']
-
-
-# 라디오 버튼을 두 줄로 나누어 양수와 음수를 배치
-
-sorted_answers = sorted(answers_options_latex.keys(), key=lambda x: answers_options_latex[x])
-
-
-# 라디오 버튼을 통해 답안 선택
-selected_answer = st.radio("답안을 선택하세요:", sorted_answers, format_func=lambda x: f"${x}$")
-
-# 실제 숫자 값으로 변환
-selected_answer_value = answers_options_latex.get(selected_answer.replace(r'\displaystyle ', ''), None)
-
+# 실제 숫자 값으로 변환, \displaystyle 처리 필요 없으므로 이 부분도 변경 없음
+selected_answer_value = answers_options_latex.get(selected_answer, None)
 # 정답 확인 버튼 및 로직
 if st.button('정답 확인'):
     # 사용자가 선택한 답안의 실제 값을 얻음
@@ -110,8 +108,8 @@ if st.button('정답 확인'):
         st.balloons()
 
     else:
-        st.title('🥹')
-        st.error('틀렸습니다.')
+        st.title('')
+        st.error('🥹 틀렸습니다. 🥲')
 
 
 with st.expander("힌트 : 그래프 보기"):
@@ -132,5 +130,6 @@ with st.expander("힌트 : 그래프 보기"):
 # 응원의 메시지 추가
 st.markdown("""
 ---
-<p style="text-align: center; color: gray; font-size: 15px;">항상 노력하는 여러분을 응원합니다! 💡Copyright &copy; 반포고 황수빈 선생님</p>
+<p style="text-align: center; color: gray; font-size: 15px;">항상 노력하는 여러분을 응원합니다! </>
+<p style="text-align: center; color: gray; font-size: 15px;">💡Copyright &copy; 반포고 황수빈 선생님</>
 """, unsafe_allow_html=True)
