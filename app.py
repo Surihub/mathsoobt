@@ -2,6 +2,12 @@ import streamlit as st
 import numpy as np
 import math
 
+st.set_page_config(
+   page_title='삼각함수 연습',
+   page_icon='📐', 
+)
+
+
 
 def simplify_fraction_good(numerator, denominator):
 
